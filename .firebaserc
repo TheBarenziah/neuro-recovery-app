@@ -1,0 +1,11 @@
+{
+  "projects": {
+    "default": "neurorecoveryapp"
+  },
+  "targets": {},
+  "etags": {
+    "neurorecoveryapp": {
+      "extensionInstances": {}
+    }
+  }
+}

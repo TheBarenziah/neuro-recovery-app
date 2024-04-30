@@ -1,0 +1,11 @@
+.home-welcome-card {
+    max-width: 500px;
+    margin-left: 50px;
+    margin-top: 50px;
+  }
+  
+  .example-header-image {
+    background-image: url('/assets/neuroicon.png');
+    background-size: cover;
+  }
+  

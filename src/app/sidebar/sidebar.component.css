@@ -1,0 +1,7 @@
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Align items in the center horizontally */
+    justify-content: center; /* Align items in the center vertically */
+    height: 100%; /* Ensure items take full height of the sidenav */
+  }
