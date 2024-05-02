@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { VideoComponent } from './video/video.component';
 import { HttpClient } from '@angular/common/http';
+import { afterNextRender } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -37,16 +38,18 @@ export class AppComponent {
   authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.authService.currentUserSig.set({
-          email: user.email!,
-          username: user.displayName!,
-        });
-      } else {
-        this.authService.currentUserSig.set(null);
-      }
-      // console.log(this.authService.currentUserSig()); 
+    afterNextRender(() => {
+      this.authService.user$.subscribe((user) => {
+        if (user) {
+          this.authService.currentUserSig.set({
+            email: user.email!,
+            username: user.displayName!,
+          });
+        } else {
+          this.authService.currentUserSig.set(null);
+        }
+        // console.log(this.authService.currentUserSig());
+      });
     });
   }
 
