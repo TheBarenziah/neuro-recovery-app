@@ -37,7 +37,7 @@ export class AppComponent {
   http = inject(HttpClient);
   authService = inject(AuthService);
 
-  ngOnInit(): void {
+  constructor() {
     afterNextRender(() => {
       this.authService.user$.subscribe((user) => {
         if (user) {
