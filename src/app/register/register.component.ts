@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, ReactiveFormsModule, Validators, FormGroup, FormControl  } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormGroup, FormControl, NonNullableFormBuilder  } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { raw } from 'express';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,20 +19,20 @@ import { DatabaseService } from '../database.service';
   selector: 'app-register',
   standalone: true,
   imports: [ReactiveFormsModule, MatIconModule, MatButtonModule, 
-  MatInputModule, MatFormFieldModule, MatButton, MatCardModule],
+  MatInputModule, MatFormFieldModule, MatButton, MatCardModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  fb = inject(FormBuilder);
+  fb = inject(NonNullableFormBuilder);
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);
   dbService = inject(DatabaseService);
-  
-  form = this.fb.nonNullable.group({
+
+  form = this.fb.group({
     username: ['', Validators.required],
-    email: ['', Validators.required],
+    email: this.fb.control<string>('', [Validators.required, Validators.email]),
     password: ['', Validators.required],
   });
 
@@ -56,34 +56,6 @@ export class RegisterComponent {
     });
   }
 
-  // onSubmit(): void {
-  //   const rawForm = this.form.getRawValue()
-  //   this.authService
-  //   .register(rawForm.email, rawForm.username, rawForm.password)
-  //   .subscribe({
-  //     next: () => {
-  //       this.router.navigateByUrl('/home');
-  //     },
-      
-  //   error: (err) => {
-  //       this.errorMessage = err.code;
-  //     }  
-  //   });
-  // }
-
   hide = true;
 
-  // email = new FormControl('', [Validators.required, Validators.email]);
-
-  // errorMessage = '';
-
-  // updateErrorMessage() {
-  //   if (this.email.hasError('required')) {
-  //     this.errorMessage = 'You must enter a value';
-  //   } else if (this.email.hasError('email')) {
-  //     this.errorMessage = 'Not a valid email';
-  //   } else {
-  //     this.errorMessage = '';
-  //   }
-  // }
 }

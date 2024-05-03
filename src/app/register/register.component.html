@@ -12,13 +12,27 @@
                     required>
         </mat-form-field>
 
-        <mat-form-field>
+        <!-- <mat-form-field>
             <mat-label>Enter your email</mat-label>
             <input matInput
                     type="email"
                     placeholder="johnsmith@example.com"
-                    formControlName="email"
+                    formControlName="email" 
+                    (blur)="updateErrorMessage()"
                     required>
+            @if (email.invalid) {
+                <mat-error>{{emailErrorMessage}}</mat-error>
+            }
+        </mat-form-field> -->
+
+        <mat-form-field>
+            <input matInput placeholder="Enter your email" formControlName="email" required>
+            @if (form.controls.email.errors?.['required']) {
+               <mat-error>Email is required</mat-error>
+            }
+            @if (form.controls.email.hasError('email')) {
+              <mat-error>Not a valid email</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
