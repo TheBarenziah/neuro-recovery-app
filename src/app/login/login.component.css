@@ -26,3 +26,7 @@
   input.example-right-align::-webkit-inner-spin-button {
     display: none;
   }
+
+  .submit-button {
+    margin-top: 20px;
+  }

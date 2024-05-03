@@ -10,25 +10,46 @@
                     placeholder="Smithy123"
                     formControlName="username"
                     required>
+            @if (form.controls.username.errors?.['required']) {
+               <mat-error>You must enter a username.</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field>
             <input matInput placeholder="Enter your email" formControlName="email" required>
             @if (form.controls.email.errors?.['required']) {
-               <mat-error>Email is required</mat-error>
+               <mat-error>You must enter an email.</mat-error>
             }
             @if (form.controls.email.hasError('email')) {
-              <mat-error>Not a valid email</mat-error>
+              <mat-error>Not a valid email.</mat-error>
             }
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Enter your password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            @if (form.controls.password.errors?.['required']) {
+                <mat-error>You must enter a password.</mat-error>
+            }
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
         </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Confirm your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+            @if (form.controls.password.errors?.['required']) {
+                <mat-error>You must enter a password.</mat-error>
+            }
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          
+          <ng-container class="passwordMatch" *ngIf="form.hasError('notMatched') && form.get('confirmPassword')?.touched">
+            <mat-error>Passwords do not match!</mat-error>
+          </ng-container>          
         
             <button mat-raised-button color='primary' type="submit" class="submit-button">Submit</button>
     </form>
