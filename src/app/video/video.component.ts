@@ -13,5 +13,5 @@ import { AuthService } from '../auth.service';
 })
 export class VideoComponent {
   authService = inject(AuthService);
-
+  
 }

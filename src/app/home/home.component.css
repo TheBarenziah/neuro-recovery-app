@@ -1,7 +1,6 @@
 .home-welcome-card {
     max-width: 500px;
-    margin-left: 50px;
-    margin-top: 50px;
+    margin: 20px auto;
   }
   
   .example-header-image {

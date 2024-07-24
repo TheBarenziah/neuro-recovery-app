@@ -1,13 +1,52 @@
-<!-- profile.component.html -->
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>User Profile</mat-card-title>
-      <mat-card-subtitle>{{ user?.username }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Email: {{ user?.email }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button routerLink="/home">Back to Home</button>
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>User Profile</mat-card-title>
+    <mat-card-subtitle>{{ userProfile?.username }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Edit Mode -->
+    <form *ngIf="isEditing" [formGroup]="userProfileForm" (ngSubmit)="saveProfile()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Save Profile</button>
+    </form>
+
+    <!-- View Mode -->
+    <div *ngIf="!isEditing">
+      <p><strong>Username:</strong> {{ userProfile?.username }}</p>
+      <p><strong>Email:</strong> {{ userProfile?.email }}</p>
+      <p><strong>Phone:</strong> {{ userProfile?.phone }}</p>
+      <p><strong>Address:</strong> {{ userProfile?.address }}</p>
+      <p><strong>Date of Birth:</strong> {{ userProfile?.dateOfBirth }}</p>
+      <button mat-button (click)="editProfile()">Edit Profile</button>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="navigateToHome()">Back to Home</button>
+  </mat-card-actions>
+</mat-card>
