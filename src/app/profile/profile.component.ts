@@ -9,14 +9,21 @@ import { UserInterface } from '../user.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatDatepickerModule, CommonModule
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CommonModule
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
@@ -28,7 +35,7 @@ export class ProfileComponent {
   fb = inject(FormBuilder);
 
   userProfile: UserInterface | null = null;
-  isEditing: boolean = false; // Ensure this is set to false initially
+  isEditing: boolean = false;
 
   userProfileForm = this.fb.group({
     username: ['', Validators.required],
@@ -41,13 +48,19 @@ export class ProfileComponent {
   constructor() {
     const user = this.authService.currentUserSig();
     if (user) {
-      this.userProfile = user;
-      this.userProfileForm.patchValue(user);
+      this.userProfile = {
+        email: user.email || '',
+        displayName: user.displayName || '',
+        phone: '',
+        address: '',
+        dateOfBirth: ''
+      };
+      this.userProfileForm.patchValue(this.userProfile);
     }
   }
 
-  get user(): UserInterface | null {
-    return this.authService.currentUserSig() ?? null;
+  get user() {
+    return this.authService.currentUserSig();
   }
 
   navigateToHome() {
@@ -58,16 +71,23 @@ export class ProfileComponent {
     this.isEditing = true;
   }
 
+  cancelEdit() {
+    this.isEditing = false;
+    if (this.userProfile) {
+      this.userProfileForm.patchValue(this.userProfile);
+    }
+  }
+
   saveProfile() {
     if (this.userProfileForm.valid) {
       const userData = this.userProfileForm.value as UserInterface;
-      const userId = this.user?.email; // Use email as user identifier
+      const userId = this.user?.email; // Use UID instead of email
       if (userId) {
         this.dbService.set(`users/${userId}`, userData)
           .then(() => {
             console.log('User profile updated successfully');
-            this.userProfile = userData; // Update the displayed profile data
-            this.isEditing = false; // Exit edit mode
+            this.userProfile = userData;
+            this.isEditing = false;
           })
           .catch((error) => console.error('Error updating user profile:', error));
       }

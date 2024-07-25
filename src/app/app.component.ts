@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -9,9 +9,9 @@ import { RegisterComponent } from './register/register.component';
 import { AuthService } from './auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
-import { VideoComponent } from './video/video.component';
 import { HttpClient } from '@angular/common/http';
 import { afterNextRender } from '@angular/core';
+import { UserInterface } from './user.interface';
 
 @Component({
   selector: 'app-root',
@@ -27,9 +27,8 @@ import { afterNextRender } from '@angular/core';
     RouterOutlet,
     MatCardModule,
     MatButton,
-    VideoComponent,
   ],
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -41,10 +40,12 @@ export class AppComponent {
     afterNextRender(() => {
       this.authService.user$.subscribe((user) => {
         if (user) {
-          this.authService.currentUserSig.set({
+          // Explicitly cast the object to UserInterface
+          const userInfo: UserInterface = {
             email: user.email!,
-            username: user.displayName!,
-          });
+            displayName: user.displayName!,
+          };
+          this.authService.currentUserSig.set(userInfo);
         } else {
           this.authService.currentUserSig.set(null);
         }
@@ -56,12 +57,10 @@ export class AppComponent {
   isSidebarOpened: boolean = false;
 
   toggleSidebar() {
-    // console.log('Sidebar toggled from', this.isSidebarOpened, 'to', !this.isSidebarOpened);
     this.isSidebarOpened = !this.isSidebarOpened;
   }
-  
-  logout() : void {
+
+  logout(): void {
     this.authService.logout();
   }
-  
 }

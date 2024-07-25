@@ -1,21 +1,30 @@
 .video-container {
+  margin-top: 20px;
   display: flex;
-  flex-wrap: wrap; /* This will wrap the cards if they don't fit in one line */
+  flex-wrap: wrap; /* Wraps video cards if they don't fit in one line */
+  justify-content: center; /* Center video cards horizontally */
 }
 
 .video-card {
-    max-width: 500px;
-    margin-left: 50px;
-    margin-top: 50px;
-  }
+  width: 100%; /* Ensure it uses the full width available in its container */
+  max-width: 500px; /* Max width of each video card */
+  margin: 0; /* Remove margins to use gap instead */
   
-  .example-header-image {
-    background-image: url('/assets/neuroicon.png');
-    background-size: cover;
-  }
+}
 
-  video {
-    width: 100%;
-    height: auto;
-  }
-  
+.video-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between video cards */
+}
+
+video, iframe {
+  width: 100%; /* Full width of the video card */
+  height: 225px; /* Fixed height for uniformity */
+  object-fit: cover; /* Ensure the content covers the area */
+}
+
+iframe {
+  border: none;
+}

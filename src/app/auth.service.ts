@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 })
 export class AuthService {
     firebaseAuth = inject(Auth);
-    user$ = user(this.firebaseAuth)
+    user$ = user(this.firebaseAuth);
     currentUserSig = signal<UserInterface | null | undefined>(undefined);
 
     register(
@@ -44,5 +44,4 @@ export class AuthService {
         const promise = signOut(this.firebaseAuth);
         return from(promise);
     }
-
 }

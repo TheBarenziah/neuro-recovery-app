@@ -1,6 +1,6 @@
 export interface UserInterface {
     email: string;
-    username: string;
+    displayName: string;
     phone?: string;
     address?: string;
     dateOfBirth?: string;

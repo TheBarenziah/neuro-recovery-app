@@ -47,7 +47,7 @@ describe('ProfileComponent', () => {
   });
 
   it('should display user information', () => {
-    expect(component.user).toEqual({ email: 'test@example.com', username: 'TestUser', phone: '1234567890', address: '123 Test St', dateOfBirth: '1990-01-01' });
+    expect(component.user).toEqual({ email: 'test@example.com', displayName: 'TestUser', phone: '1234567890', address: '123 Test St', dateOfBirth: '1990-01-01' });
     expect(component.userProfileForm.value.username).toEqual('TestUser');
     expect(component.userProfileForm.value.email).toEqual('test@example.com');
   });

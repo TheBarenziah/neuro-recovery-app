@@ -1,23 +1,81 @@
-<mat-card class="home-welcome-card">
+<div class="home-container">
+  <!-- Welcome Card -->
+  <mat-card class="home-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Welcome to NeuroRecoveryApp, {{authService.currentUserSig()?.username}}!</mat-card-title>
+      <mat-card-title>Welcome to NeuroRecoveryApp, {{ authService.currentUserSig()?.displayName }}!</mat-card-title>
       <mat-card-subtitle>Home Page</mat-card-subtitle>
     </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-content>
-      <!-- <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Phasellus nec porttitor nulla. Mauris sodales libero massa, vel congue nisl sagittis vitae. 
-        Donec tincidunt ex quis massa ullamcorper luctus. Sed euismod justo in mi placerat imperdiet. 
-        Ut eu felis velit. Curabitur felis dolor, aliquet nec nunc et, molestie placerat nunc. 
-        Etiam lacinia ante in bibendum fringilla. Proin venenatis lectus eu dolor tincidunt vehicula. 
-      </p> -->
+      <p>
+        This is the home page of the NeuroRecoveryApp. You can use the navigation bar to navigate to different pages.
+      </p>
+      <!-- <img src="assets/welcome-placeholder.jpg" alt="Welcome Image"> -->
     </mat-card-content>
-    <!-- <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions> -->
-</mat-card>
+  </mat-card>
 
-  
+  <!-- Introduction Card -->
+  <mat-card class="home-card">
+    <mat-card-header>
+      <mat-card-title>Introduction</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        NeuroRecoveryApp is designed to support individuals on their journey to neurological recovery. Whether you're managing a condition, recovering from surgery, or looking to maintain your neurological health, we provide the tools and resources to help you every step of the way.
+      </p>
+      <img class="card-image" src="assets/introduction.png" alt="Introduction Image">
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Recent Updates Card -->
+  <mat-card class="home-card">
+    <mat-card-header>
+      <mat-card-title>Recent Updates</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>New exercise routines added to help with motor skills recovery.</li>
+        <li>Introducing our latest feature: personalized recovery plans.</li>
+        <li>Webinars on mental health and neurological conditions coming soon.</li>
+      </ul>
+      <img class="card-image" src="assets/recent_updates.jpg" alt="Recent Updates Image">
+    </mat-card-content>
+  </mat-card>
+
+  <!-- User Details Card -->
+  <mat-card class="home-card" *ngIf="authService.currentUserSig()">
+    <mat-card-header>
+      <mat-card-title>Your Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Username:</strong> {{ authService.currentUserSig()?.displayName }}</p>
+      <p><strong>Email:</strong> {{ authService.currentUserSig()?.email }}</p>
+      <img class="card-image" src="assets/userdetails-placeholder.jpg" alt="User Details Image">
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Recommended Activities Card -->
+  <mat-card class="home-card" *ngIf="authService.currentUserSig()">
+    <mat-card-header>
+      <mat-card-title>Recommended Activities</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>Try our new balance exercises to improve stability.</li>
+        <li>Join the community forum to share your experiences and get support.</li>
+        <li>Set your weekly goals to stay on track with your recovery plan.</li>
+      </ul>
+      <img class="card-image" src="assets/recommended_exercises.jpg" alt="Recommended Activities Image">
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Quick Links Bar -->
+<div class="quick-links-bar">
+  <div class="quick-links">
+    <a routerLink="/exercises">Exercises</a>
+    <a routerLink="/progress">Track Progress</a>
+    <a routerLink="/resources">Resources</a>
+    <a routerLink="/support">Support</a>
+  </div>
+</div>
